@@ -61,13 +61,37 @@ struct TripItemRow: View {
                         }
                         
                         HStack {
-                            Text(item.ownership.label)
-                                .bold()
-                                .padding(.horizontal, 5)
-                                .padding(.vertical, 4)
-                                .background(.blue.opacity(0.15))
-                                .foregroundStyle(.blue)
-                                .clipShape(Capsule())
+                            if item.ownership.label == "Pribadi" {
+                                Text(item.ownership.label)
+                                    .bold()
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 4)
+                                    .background(.blue.opacity(0.15))
+                                    .foregroundStyle(.blue)
+                                    .clipShape(Capsule())
+                            }
+                            
+                            else if item.ownership.label == "Kelompok" {
+                                Text(item.ownership.label)
+                                    .bold()
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 4)
+                                    .background(.purple.opacity(0.15))
+                                    .foregroundStyle(.purple)
+                                    .clipShape(Capsule())
+                            }
+                            
+                            else if item.ownership.label == "Sewa" {
+                                Text(item.ownership.label)
+                                    .bold()
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 4)
+                                    .background(.orange.opacity(0.15))
+                                    .foregroundStyle(.orange)
+                                    .clipShape(Capsule())
+                            }
+
+
                             
                             if item.notes?.isEmpty == false {
                                 Text("Notes")
@@ -75,7 +99,7 @@ struct TripItemRow: View {
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 4)
                                     .background(.yellow.opacity(0.15))
-                                    .foregroundStyle(.orange)
+                                    .foregroundStyle(.yellow)
                                     .clipShape(Capsule())
                             }
                         }
