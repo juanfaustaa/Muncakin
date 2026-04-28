@@ -151,6 +151,7 @@ struct CarrierChecklistView: View {
             }
         }
         .navigationTitle("Carrier")
+        .navigationSubtitle("Barang disusun dari paling bawah ke atas")
         .listStyle(.insetGrouped)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
