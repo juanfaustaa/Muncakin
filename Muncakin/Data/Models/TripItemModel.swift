@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class TripItem {
+final class TripItemModel {
     @Attribute(.unique) var id: UUID
     var name: String
     var quantity: Int
@@ -19,8 +19,8 @@ final class TripItem {
     var category: ItemCategories
     var ownership: ItemOwnerships
     var notes: String?
-    var trip: Trip?
-    var sourcePackItem: PackItem?
+    var trip: TripModel?
+    var sourcePackItem: PackItemModel?
     
     init(
         id: UUID = UUID(),
@@ -32,8 +32,8 @@ final class TripItem {
         category: ItemCategories,
         ownership: ItemOwnerships = .owned,
         notes: String? = nil,
-        trip: Trip? = nil,
-        sourcePackItem: PackItem? = nil
+        trip: TripModel? = nil,
+        sourcePackItem: PackItemModel? = nil
     ){
         self.id = id
         self.name = name

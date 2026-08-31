@@ -12,69 +12,69 @@ struct SeedData {
     static func seed(context: ModelContext) {
         // Seeding Data Gunung
         // Grade I
-        let bromo = Mountain(name: "Gunung Bromo", grade: .gradeI, location: "Jawa Timur", height: 2329, minimumHikeDuration: 2, imageName: "gunung_bromo")
+        let bromo = MountainModel(name: "Gunung Bromo", grade: .gradeI, location: "Jawa Timur", height: 2329, minimumHikeDuration: 2, imageName: "gunung_bromo")
         
         // Grade II
-        let ambang = Mountain(name: "Gunung Ambang", grade: .gradeII, location: "Sulawesi Utara", height: 1795, minimumHikeDuration: 2, imageName: "gunung_ambang")
+        let ambang = MountainModel(name: "Gunung Ambang", grade: .gradeII, location: "Sulawesi Utara", height: 1795, minimumHikeDuration: 2, imageName: "gunung_ambang")
         
-        let ijen = Mountain(name: "Gunung Ijen", grade: .gradeII, location: "Jawa Timur", height: 2769, minimumHikeDuration: 2, imageName: "gunung_ijen")
+        let ijen = MountainModel(name: "Gunung Ijen", grade: .gradeII, location: "Jawa Timur", height: 2769, minimumHikeDuration: 2, imageName: "gunung_ijen")
         
-        let kaba = Mountain(name: "Gunung Kaba", grade: .gradeII, location: "Bengkulu", height: 1952, minimumHikeDuration: 2, imageName: "gunung_kaba")
+        let kaba = MountainModel(name: "Gunung Kaba", grade: .gradeII, location: "Bengkulu", height: 1952, minimumHikeDuration: 2, imageName: "gunung_kaba")
         
-        let bulubaria = Mountain(name: "Gunung Bulu Baria", grade: .gradeII, location: "Bengkulu", height: 2730, minimumHikeDuration: 2, imageName: "gunung_bulubaria")
+        let bulubaria = MountainModel(name: "Gunung Bulu Baria", grade: .gradeII, location: "Bengkulu", height: 2730, minimumHikeDuration: 2, imageName: "gunung_bulubaria")
         
-        let mambulilling = Mountain(name: "Gunung Mambulilling", grade: .gradeII, location: "Bengkulu", height: 2873, minimumHikeDuration: 2, imageName: "gunung_mambulilling")
+        let mambulilling = MountainModel(name: "Gunung Mambulilling", grade: .gradeII, location: "Bengkulu", height: 2873, minimumHikeDuration: 2, imageName: "gunung_mambulilling")
         
-        let papandayan = Mountain(name: "Gunung Papandayan", grade: .gradeII, location: "Jawa Barat", height: 2665, minimumHikeDuration: 2, imageName: "gunung_papandayan")
+        let papandayan = MountainModel(name: "Gunung Papandayan", grade: .gradeII, location: "Jawa Barat", height: 2665, minimumHikeDuration: 2, imageName: "gunung_papandayan")
         
-        let bulusaraung = Mountain(name: "Gunung Bulusaraung", grade: .gradeII, location: "Sulawesi Selatan", height: 1353, minimumHikeDuration: 2, imageName: "gunung_bulusaraung")
+        let bulusaraung = MountainModel(name: "Gunung Bulusaraung", grade: .gradeII, location: "Sulawesi Selatan", height: 1353, minimumHikeDuration: 2, imageName: "gunung_bulusaraung")
         
-        let batur = Mountain(name: "Gunung Batur", grade: .gradeII, location: "Bali", height: 1717, minimumHikeDuration: 2, imageName: "gunung_batur")
+        let batur = MountainModel(name: "Gunung Batur", grade: .gradeII, location: "Bali", height: 1717, minimumHikeDuration: 2, imageName: "gunung_batur")
         
-        let maras = Mountain(name: "Gunung Maras", grade: .gradeII, location: "Bangka Belitung", height: 669, minimumHikeDuration: 2, imageName: "gunung_maras")
+        let maras = MountainModel(name: "Gunung Maras", grade: .gradeII, location: "Bangka Belitung", height: 669, minimumHikeDuration: 2, imageName: "gunung_maras")
         
         // Grade III
-        let kelimutu = Mountain(name: "Gunung Kelimutu", grade: .gradeIII, location: "NTT", height: 1639, minimumHikeDuration: 2, imageName: "gunung_kelimutu")
+        let kelimutu = MountainModel(name: "Gunung Kelimutu", grade: .gradeIII, location: "NTT", height: 1639, minimumHikeDuration: 2, imageName: "gunung_kelimutu")
         
-        let ciremai = Mountain(name: "Gunung Ciremai", grade: .gradeIII, location: "Jawa Barat", height: 3078, minimumHikeDuration: 2, imageName: "gunung_ciremai")
+        let ciremai = MountainModel(name: "Gunung Ciremai", grade: .gradeIII, location: "Jawa Barat", height: 3078, minimumHikeDuration: 2, imageName: "gunung_ciremai")
         
-        let bawakaraeng = Mountain(name: "Gunung Bawakaraeng", grade: .gradeIII, location: "Sulawesi Selatan", height: 2830, minimumHikeDuration: 2, imageName: "gunung_bawakaraeng")
+        let bawakaraeng = MountainModel(name: "Gunung Bawakaraeng", grade: .gradeIII, location: "Sulawesi Selatan", height: 2830, minimumHikeDuration: 2, imageName: "gunung_bawakaraeng")
         
-        let pangrango = Mountain(name: "Gunung Pangrango", grade: .gradeIII, location: "Jawa Barat", height: 3026, minimumHikeDuration: 2, imageName: "gunung_pangrango")
+        let pangrango = MountainModel(name: "Gunung Pangrango", grade: .gradeIII, location: "Jawa Barat", height: 3026, minimumHikeDuration: 2, imageName: "gunung_pangrango")
         
-        let gede = Mountain(name: "Gunung Gede", grade: .gradeIII, location: "Jawa Barat", height: 2958, minimumHikeDuration: 2, imageName: "gunung_gede")
+        let gede = MountainModel(name: "Gunung Gede", grade: .gradeIII, location: "Jawa Barat", height: 2958, minimumHikeDuration: 2, imageName: "gunung_gede")
         
-        let halimun_salak = Mountain(name: "Gunung Halimun Salak", grade: .gradeIII, location: "Jawa Barat", height: 1929, minimumHikeDuration: 2, imageName: "gunung_halimunsalak")
+        let halimun_salak = MountainModel(name: "Gunung Halimun Salak", grade: .gradeIII, location: "Jawa Barat", height: 1929, minimumHikeDuration: 2, imageName: "gunung_halimunsalak")
         
-        let merbabu = Mountain(name: "Gunung Merbabu", grade: .gradeIII, location: "Jawa Tengah", height: 3145, minimumHikeDuration: 2, imageName: "gunung_merbabu")
+        let merbabu = MountainModel(name: "Gunung Merbabu", grade: .gradeIII, location: "Jawa Tengah", height: 3145, minimumHikeDuration: 2, imageName: "gunung_merbabu")
         
-        let nokilalaki = Mountain(name: "Gunung Nokilalaki", grade: .gradeIII, location: "Sulawesi Tengah", height: 2357, minimumHikeDuration: 2, imageName: "gunung_nokilalaki")
+        let nokilalaki = MountainModel(name: "Gunung Nokilalaki", grade: .gradeIII, location: "Sulawesi Tengah", height: 2357, minimumHikeDuration: 2, imageName: "gunung_nokilalaki")
         
-        let masurai = Mountain(name: "Gunung Masurai", grade: .gradeIII, location: "Jambi", height: 2916, minimumHikeDuration: 3, imageName: "gunung_masurai")
+        let masurai = MountainModel(name: "Gunung Masurai", grade: .gradeIII, location: "Jambi", height: 2916, minimumHikeDuration: 3, imageName: "gunung_masurai")
         
-        let tujuh = Mountain(name: "Danau Gunung Tujuh", grade: .gradeIII, location: "Jambi", height: 2732, minimumHikeDuration: 2, imageName: "danau_gunung_tujuh_kerinci")
+        let tujuh = MountainModel(name: "Danau Gunung Tujuh", grade: .gradeIII, location: "Jambi", height: 2732, minimumHikeDuration: 2, imageName: "danau_gunung_tujuh_kerinci")
         
-        let kelam = Mountain(name: "Gunung Kelam", grade: .gradeIII, location: "Kalimantan Barat", height: 1002, minimumHikeDuration: 2, imageName: "gunung_kelam")
+        let kelam = MountainModel(name: "Gunung Kelam", grade: .gradeIII, location: "Kalimantan Barat", height: 1002, minimumHikeDuration: 2, imageName: "gunung_kelam")
         
         // Grade IV
-        let kerinci = Mountain(name: "Gunung Kerinci", grade: .gradeIV, location: "Jambi", height: 3805, minimumHikeDuration: 2, imageName: "gunung_kerinci")
+        let kerinci = MountainModel(name: "Gunung Kerinci", grade: .gradeIV, location: "Jambi", height: 3805, minimumHikeDuration: 2, imageName: "gunung_kerinci")
         
-        let argopuro = Mountain(name: "Gunung Argopuro", grade: .gradeIV, location: "Jawa Timur", height: 3088, minimumHikeDuration: 4, imageName: "gunung_argopuro")
+        let argopuro = MountainModel(name: "Gunung Argopuro", grade: .gradeIV, location: "Jawa Timur", height: 3088, minimumHikeDuration: 4, imageName: "gunung_argopuro")
         
-        let bukit_raya = Mountain(name: "Gunung Bukit Raya", grade: .gradeIV, location: "KalBar & KalTeng", height: 2278, minimumHikeDuration: 2, imageName: "gunung_bukit_raya")
+        let bukit_raya = MountainModel(name: "Gunung Bukit Raya", grade: .gradeIV, location: "KalBar & KalTeng", height: 2278, minimumHikeDuration: 2, imageName: "gunung_bukit_raya")
         
-        let gandang_dewata = Mountain(name: "Gunung Gandang Dewata", grade: .gradeIV, location: "Sulawesi Barat", height: 3037, minimumHikeDuration: 7, imageName: "gunung_gandang_dewata")
+        let gandang_dewata = MountainModel(name: "Gunung Gandang Dewata", grade: .gradeIV, location: "Sulawesi Barat", height: 3037, minimumHikeDuration: 7, imageName: "gunung_gandang_dewata")
         
-        let binaiya = Mountain(name: "Gunung Binaiya", grade: .gradeIV, location: "Maluku", height: 3027, minimumHikeDuration: 11, imageName: "gunung_binaiya")
+        let binaiya = MountainModel(name: "Gunung Binaiya", grade: .gradeIV, location: "Maluku", height: 3027, minimumHikeDuration: 11, imageName: "gunung_binaiya")
         
-        let rinjani = Mountain(name: "Gunung Rinjani", grade: .gradeIV, location: "NTB", height: 3726, minimumHikeDuration: 3, imageName: "gunung_rinjani")
+        let rinjani = MountainModel(name: "Gunung Rinjani", grade: .gradeIV, location: "NTB", height: 3726, minimumHikeDuration: 3, imageName: "gunung_rinjani")
         
         // Grade V
-        let leuser = Mountain(name: "Gunung Leuser", grade: .gradeV, location: "Aceh", height: 3466, minimumHikeDuration: 10, imageName: "gunung_leuser")
+        let leuser = MountainModel(name: "Gunung Leuser", grade: .gradeV, location: "Aceh", height: 3466, minimumHikeDuration: 10, imageName: "gunung_leuser")
         
-        let carstensz = Mountain(name: "Carstensz Pyramid", grade: .gradeV, location: "Papua", height: 4884, minimumHikeDuration: 10, imageName: "gunung_carstensz_pyramid")
+        let carstensz = MountainModel(name: "Carstensz Pyramid", grade: .gradeV, location: "Papua", height: 4884, minimumHikeDuration: 10, imageName: "gunung_carstensz_pyramid")
         
-        let trikora = Mountain(name: "Gunung Trikora", grade: .gradeV, location: "Papua", height: 4751, minimumHikeDuration: 7, imageName: "gunung_trikora")
+        let trikora = MountainModel(name: "Gunung Trikora", grade: .gradeV, location: "Papua", height: 4751, minimumHikeDuration: 7, imageName: "gunung_trikora")
         
         // insert gunung-gunung
         [bromo, ambang, ijen, kaba, bulubaria, mambulilling, kelimutu, papandayan, bulusaraung, batur, maras, ciremai, bawakaraeng, pangrango, gede, halimun_salak, merbabu, nokilalaki, masurai, tujuh, kerinci, kelam, argopuro, bukit_raya, gandang_dewata, binaiya, rinjani, leuser, carstensz, trikora].forEach {
@@ -83,7 +83,7 @@ struct SeedData {
         
         // Seeding Data Barang Essensial dan Essensial tapi Opsional di setiap trip
         
-        let essentials: [PackItem] = [
+        let essentials: [PackItemModel] = [
         // Shelter
             .init(name: "Sleeping Bag", defaultQuantity: 1, units: .pcs, layer: .essential, category: .shelter),
             .init(name: "Matras", defaultQuantity: 1, units: .pcs, layer: .essential, category: .shelter),
@@ -151,7 +151,7 @@ struct SeedData {
         
         ]
         // Seeding Data Barang Esensial di Spesifik gunung
-        let mountainItems: [PackItem] = [
+        let MountainModelItems: [PackItemModel] = [
             .init(name: "Masker Buff", defaultQuantity: 1, units: .pcs, layer: .mountainEssential, category: .safetyTools, mountains: [bromo, ambang, kelimutu, papandayan, batur, kerinci, rinjani]),
             .init(name: "Gaiter", defaultQuantity: 1, units: .pair, layer: .mountainEssential, category: .safetyTools, mountains: [batur, kerinci, leuser]),
             .init(name: "Trekking Pole", defaultQuantity: 1, units: .pair, layer: .mountainEssential, category: .safetyTools, mountains: [mambulilling, ciremai, bawakaraeng, pangrango, gede, nokilalaki, kerinci, gandang_dewata]),
@@ -159,7 +159,7 @@ struct SeedData {
             .init(name: "Peralatan Panjat", defaultQuantity: 1, units: .set, layer: .mountainEssential, category: .safetyTools, mountains: [carstensz, trikora])
         ]
         
-        (essentials + mountainItems).forEach {
+        (essentials + MountainModelItems).forEach {
             context.insert($0)
         }
         

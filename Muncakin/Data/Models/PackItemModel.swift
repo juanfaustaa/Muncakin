@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class PackItem {
+final class PackItemModel {
     @Attribute(.unique) var id: UUID
     var name: String
     var defaultQuantity: Int
@@ -17,8 +17,8 @@ final class PackItem {
     var layer: ItemLayers
     var category: ItemCategories
     
-    @Relationship(inverse: \Mountain.specificItems)
-    var mountains: [Mountain] = []
+    @Relationship(inverse: \MountainModel.specificItems)
+    var mountains: [MountainModel] = []
     
     init(
         id: UUID = UUID(),
@@ -27,7 +27,7 @@ final class PackItem {
         units: ItemUnits,
         layer: ItemLayers,
         category: ItemCategories,
-        mountains: [Mountain] = []
+        mountains: [MountainModel] = []
     ){
         self.id = id
         self.name = name
