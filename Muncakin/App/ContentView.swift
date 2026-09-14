@@ -14,10 +14,10 @@ struct ContentView: App {
     
     let container: ModelContainer = {
         let schema = Schema([
-            Mountain.self,
-            PackItem.self,
-            Trip.self,
-            TripItem.self
+            MountainModel.self,
+            PackItemModel.self,
+            TripModel.self,
+            TripItemModel.self
         ])
         
         let config = ModelConfiguration(
@@ -32,7 +32,7 @@ struct ContentView: App {
             
             if !hasSeeded {
                 let context = ModelContext(container)
-                SeedData.seed(context: context)
+                try SeedOrchestrator.seed(context: context)
                 UserDefaults.standard.set(true, forKey: "hasSeededData")
             }
             
@@ -48,6 +48,8 @@ struct ContentView: App {
     
     var body: some Scene {
         WindowGroup {
+            let dependencies = AppDependencies.production(modelContext: container.mainContext)
+            
             ZStack {
                 if showSplash {
                     SplashScreen()
@@ -58,7 +60,7 @@ struct ContentView: App {
                             }
                         }
                 } else {
-                    HomeView()
+                    HomeView(viewModel: dependencies.makeHomeViewModel(), dependencies: dependencies)
                         .transition(.opacity)  // fade in saat muncul
                         .onAppear {
                             NotificationsManager.shared.requestPermission()

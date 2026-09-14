@@ -4,42 +4,40 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct EditTripItemView: View {
-
-    @Environment(\.modelContext) var context
+    
+    @State var viewModel: EditTripItemViewModel
+    let dependencies: AppDependencies
     @Environment(\.dismiss) var dismiss
-
-    @Bindable var item: TripItem
-
-    var isValid: Bool { !item.name.trimmingCharacters(in: .whitespaces).isEmpty }
-
+    let onSaved: (TripItem) -> Void
+    
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack {
             Form {
                 Section("Barang") {
-                    TextField("Nama barang", text: $item.name)
-                    Picker("Satuan", selection: $item.units) {
+                    TextField("Nama barang", text: $viewModel.name)
+                    Picker("Satuan", selection: $viewModel.units) {
                         ForEach(ItemUnits.allCases, id: \.self) { u in
                             Text(u.label).tag(u)
                         }
                     }
-                    if item.units == .gram {
-                        TextField("Gramasi", value: $item.quantity, format: .number)
+                    if viewModel.units == .gram {
+                        TextField("Gramasi", value: $viewModel.quantity, format: .number)
                             .keyboardType(.numberPad)
                     } else {
-                        Stepper("Jumlah: \(item.quantity)", value: $item.quantity, in: 1...999)
+                        Stepper("Jumlah: \(viewModel.quantity)", value: $viewModel.quantity, in: 1...999)
                     }
                 }
 
                 Section("Kategori & Status") {
-                    Picker("Kategori", selection: $item.category) {
+                    Picker("Kategori", selection: $viewModel.category) {
                         ForEach(ItemCategories.allCases, id: \.self) { c in
                             Text(c.label).tag(c)
                         }
                     }
-                    Picker("Status", selection: $item.ownership) {
+                    Picker("Status", selection: $viewModel.ownership) {
                         ForEach(ItemOwnerships.allCases, id: \.self) { o in
                             Text(o.label).tag(o)
                         }
@@ -48,8 +46,8 @@ struct EditTripItemView: View {
 
                 Section("Catatan (opsional)") {
                     TextField("Tulis catatan...", text: Binding(
-                        get: { item.notes ?? "" },
-                        set: { item.notes = $0.isEmpty ? nil : $0 }
+                        get: { viewModel.notes ?? "" },
+                        set: { viewModel.notes = $0.isEmpty ? nil : $0 }
                     ), axis: .vertical)
                     .lineLimit(3)
                 }
@@ -62,9 +60,17 @@ struct EditTripItemView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Simpan") {
-                        dismiss()
+                        
+                        do{
+                            let updatedItem = try viewModel.saveChanges()
+                            onSaved(updatedItem)
+                            dismiss()
+                        }catch {
+                            //
+                        }
+                        
                     }
-                    .disabled(!isValid)
+                    .disabled(!viewModel.isValid)
                 }
             }
         }

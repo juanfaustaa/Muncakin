@@ -13,12 +13,12 @@ enum ItemLayers: String, Codable, CaseIterable, Hashable {
     case mountainEssential = "mountainEssential"
     case additional = "additional"
     
-    var label: String {
+    var sortPriority: Int {
         switch self {
-        case.essential: return "Esensial"
-        case.essentialOptional: return "Esensial tapi opsional"
-        case.mountainEssential: return "Esensial untuk gunung ini"
-        case.additional: return "Tambahan"
+        case.essential: return 0
+        case.essentialOptional: return 2
+        case.mountainEssential: return 1
+        case.additional: return 3
         }
     }
 }

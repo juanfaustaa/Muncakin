@@ -7,27 +7,11 @@
 
 import Foundation
 
-struct Trip{
+struct Trip: Identifiable{
     let id: UUID
     let startDate: Date
     let endDate: Date
-    let isPast: Bool
+    var isPast: Bool
     let mountain: Mountain
-    let items: [TripItem]
-    
-//    var checkedCount: Int { <- presentation
-//        items
-//            .filter { $0.isPacked }
-//            .count
-//    }
-//    
-//    var totalCount: Int { <- presentation
-//        items.count
-//    }
-//    
-//    func sortItemsByCategory(in category: ItemCategories) -> [TripItem] { <- presentation
-//        items
-//            .filter { $0.category == category }
-//            .sorted { $0.layer.rawValue < $1.layer.rawValue }
-//    }
+    var items: [TripItem]
 }

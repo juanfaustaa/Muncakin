@@ -22,7 +22,7 @@ struct TripCard: View {
     
     var body: some View {
         ZStack (alignment: .topLeading){
-            Image(trip.mountain?.imageName ?? "mountain_placeholder")
+            Image(trip.mountain.imageName)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 362, height: 160)
@@ -60,7 +60,7 @@ struct TripCard: View {
                 
                 Spacer()
                 
-                Text(trip.mountain?.name ?? "nama gunung")
+                Text(trip.mountain.name)
                     .font(.title3)
                     .bold()
                     .foregroundStyle(.white)

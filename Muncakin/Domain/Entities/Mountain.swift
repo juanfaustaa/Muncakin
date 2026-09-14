@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Mountain{
+struct Mountain: Identifiable {
     let id: UUID
     let name: String
     let grade: MountainGrades
@@ -15,5 +15,5 @@ struct Mountain{
     let height: Int
     let minimumHikeDuration: Int
     let imageName: String
-    let specificItem: [PackItem]
+    let specificItems: [PackItem]
 }

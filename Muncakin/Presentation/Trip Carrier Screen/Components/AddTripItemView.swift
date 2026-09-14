@@ -6,50 +6,41 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct AddTripItemView: View {
-    let trip: Trip
     
-    @Environment(\.modelContext) var context
+    @State var viewModel: AddTripItemViewModel
+    let dependencies: AppDependencies
     @Environment(\.dismiss) var dismiss
-    
-    @State private var name = ""
-    @State private var quantity = 1
-    @State private var gramasi = 0
-    @State private var units: ItemUnits = .pcs
-    @State private var category: ItemCategories = .others
-    @State private var ownership: ItemOwnerships = .owned
-    @State private var notes = ""
-    
-    var isValid: Bool { !name.trimmingCharacters(in: .whitespaces).isEmpty }
+    let onSaved: (TripItem) -> Void
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack {
             Form {
                 Section("Barang") {
-                    TextField("Nama barang", text: $name)
-                    Picker("Satuan", selection: $units) {
+                    TextField("Nama barang", text: $viewModel.name)
+                    Picker("Satuan", selection: $viewModel.units) {
                         ForEach(ItemUnits.allCases, id: \.self) { u in
                             Text(u.label).tag(u)
                         }
                     }
-                    if units == .gram {
-                        TextField("Gramasi", value: $gramasi, format: .number)
+                    if viewModel.units == .gram {
+                        TextField("Gramasi", value: $viewModel.gramasi, format: .number)
                             .keyboardType(.numberPad)
                     }
                     else {
-                        Stepper("Jumlah: \(quantity)", value: $quantity, in: 1...999)
+                        Stepper("Jumlah: \(viewModel.quantity)", value: $viewModel.quantity, in: 1...999)
                     }
                 }
                 
                 Section("Kategori & Status") {
-                    Picker("Kategori", selection: $category) {
+                    Picker("Kategori", selection: $viewModel.category) {
                         ForEach(ItemCategories.allCases, id: \.self) { c in
                             Text(c.label).tag(c)
                         }
                     }
-                    Picker("Status", selection: $ownership) {
+                    Picker("Status", selection: $viewModel.ownership) {
                         ForEach(ItemOwnerships.allCases, id: \.self) { o in
                             Text(o.label).tag(o)
                         }
@@ -57,7 +48,7 @@ struct AddTripItemView: View {
                 }
                 
                 Section("Catatan (opsional)") {
-                    TextField("Tulis catatan...", text: $notes, axis: .vertical)
+                    TextField("Tulis catatan...", text: $viewModel.notes, axis: .vertical)
                         .lineLimit(3)
                 }
             }
@@ -71,21 +62,15 @@ struct AddTripItemView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Tambah") {
-                        let item = TripItem(
-                            name: name,
-                            quantity: quantity,
-                            units: units,
-                            layer: .additional,
-                            category: category,
-                            ownership: ownership,
-                            notes: notes.isEmpty ? nil : notes,
-                            trip: trip
-                        )
-                        context.insert(item)
-                        trip.items.append(item)
-                        dismiss()
+                        do {
+                            let newItem = try viewModel.addItem()
+                            onSaved(newItem)
+                            dismiss()
+                        } catch {
+                            
+                        }
                     }
-                    .disabled(!isValid)
+                    .disabled(!viewModel.isValid)
                 }
             }
         }

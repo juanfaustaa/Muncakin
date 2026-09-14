@@ -9,24 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct TripItemRow: View {
-    @Environment(\.modelContext) var context
-    @Environment(\.dismiss) var dismiss
     
-    @Bindable var item: TripItem
+    let item: TripItem
+    let trip: Trip
+    
+    let onToggle: () -> Void
+    let onDelete: () -> Void
+    let isDeleteable: (TripItem) -> Bool
+    let onItemUpdated: (TripItem) -> Void
     
     @State private var editTripItem: TripItem?
-    @State private var isWantToDelete: Bool = false
+    @State private var isWantToDelete = false
     
-    private var isDeleteable: Bool {
-        return (item.layer == .additional || item.layer == .essentialOptional)
-    }
+    let dependencies: AppDependencies
     
     var body: some View {
         HStack(spacing: 12) {
             // Checkbox
             Button {
                 withAnimation(.easeIn(duration: 0.4)){
-                    item.isPacked.toggle()
+                    onToggle()
                 }
             } label: {
                 Image(systemName: item.isPacked
@@ -118,7 +120,13 @@ struct TripItemRow: View {
         }
         .opacity(item.isPacked ? 0.5 : 1)
         .sheet(item: $editTripItem) { tripItem in
-            EditTripItemView(item: tripItem)
+            EditTripItemView(
+                viewModel: dependencies.makeEditTripViewModel(item: tripItem, trip: trip),
+                dependencies: dependencies,
+                onSaved: { updatedItem in
+                    onItemUpdated(updatedItem)
+                }
+            )
         }
         .swipeActions{
             Button {
@@ -129,16 +137,18 @@ struct TripItemRow: View {
                     .tint(.red)
             }
         }
-        .alert(isDeleteable ? "Hapus Item?" : "Barang tidak dapat dihapus." , isPresented: $isWantToDelete) {
+        .alert(isDeleteable(item) ? "Hapus Item?" : "Barang tidak dapat dihapus." , isPresented: $isWantToDelete) {
             
-            if isDeleteable {
+            if isDeleteable(item) {
                 Button("Hapus", role: .destructive) {
-                    context.delete(item)
+                    onDelete()
                 }
-                Button("Batal", role: .cancel) {}
+                Button("Batal", role: .cancel) {
+                    isWantToDelete = false
+                }
             }
         } message: {
-            if isDeleteable {
+            if isDeleteable(item) {
                 Text("Apakah kamu yakin untuk menghapus \(item.name) dari daftar barang kamu?")
             }
             else {

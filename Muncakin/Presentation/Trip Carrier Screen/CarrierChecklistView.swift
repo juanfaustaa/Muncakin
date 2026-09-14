@@ -9,36 +9,20 @@ import SwiftUI
 import SwiftData
 
 struct CarrierChecklistView: View {
-    let trip: Trip
     
-    @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
-    
-    @State private var showAddItem = false
-    @State private var showFinishAlert = false
-    
-    private var dateRange: String {
-        let fmt = DateFormatter()
-        fmt.locale = Locale(identifier: "id_ID")
-        fmt.dateFormat = "dd/MM/yy"
-        return "\(fmt.string(from: trip.startDate)) - \(fmt.string(from: trip.endDate))"
-    }
-    
-    var isEnableComplete: Bool {
-        return Date.now >= trip.endDate
-    }
-    
-    var remaining: Int {
-        trip.totalCount - trip.checkedCount
-    }
+    @State var viewModel: CarrierChecklistViewModel
+    let dependencies: AppDependencies
+    let onDelete: (Trip) -> Void
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         List {
             // Header
             Section {
                 ZStack(alignment: .topLeading) {
                     // Background Image
-                    Image(trip.mountain?.imageName ?? "mountain_placeholder")
+                    Image(viewModel.trip.mountain.imageName)
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: .infinity)
@@ -55,7 +39,7 @@ struct CarrierChecklistView: View {
                     // Content
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text(trip.mountain?.name ?? "Unknown Mountain")
+                            Text(viewModel.trip.mountain.name)
                                 .font(.title2)
                                 .bold()
                                 .foregroundStyle(.white)
@@ -63,7 +47,7 @@ struct CarrierChecklistView: View {
                             
                             Spacer()
                             
-                            Text(dateRange)
+                            Text(viewModel.dateRange)
                                 .font(.caption)
                                 .bold()
                                 .foregroundStyle(.white)
@@ -74,11 +58,11 @@ struct CarrierChecklistView: View {
                         Spacer()
                         
                         HStack {
-                            Label(trip.mountain?.location ?? "-", systemImage: "mappin.circle.fill")
+                            Label(viewModel.trip.mountain.location, systemImage: "mappin.circle.fill")
                             Spacer()
-                            Label("\(trip.mountain?.height ?? 0) mdpl", systemImage: "mountain.2.fill")
+                            Label("\(viewModel.trip.mountain.height) mdpl", systemImage: "mountain.2.fill")
                             Spacer()
-                            Label("\(trip.mountain?.minimumHikeDuration ?? 0) hari", systemImage: "figure.hiking.circle.fill")
+                            Label("\(viewModel.hikeDuration) hari", systemImage: "figure.hiking.circle.fill")
                         }
                         .font(.caption.bold())
                         .foregroundStyle(.white.opacity(0.85))
@@ -86,8 +70,8 @@ struct CarrierChecklistView: View {
                         Divider()
                             .overlay(.white.opacity(0.3))
                         
-                        if remaining > 0 {
-                            Text("‼️ \(remaining) barang belum dipacking!")
+                        if viewModel.remaining > 0 {
+                            Text("‼️ \(viewModel.remaining) barang belum dipacking!")
                                 .font(.subheadline.bold())
                                 .foregroundStyle(.white)
                         } else {
@@ -104,45 +88,35 @@ struct CarrierChecklistView: View {
             .listRowBackground(Color.clear)
             
             // Items per category
-            ForEach(ItemCategories.allCases.sorted { catA, catB in
-                
-                let aItems = trip.items(in: catA)
-                let bItems = trip.items(in: catB)
-                
-                let aFullyPacked = !aItems.isEmpty && aItems.allSatisfy { $0.isPacked }
-                let bFullyPacked = !bItems.isEmpty && bItems.allSatisfy { $0.isPacked }
-                
-                return !aFullyPacked && bFullyPacked
-                
-            }, id: \.self) { category in
-                let categoryItems = trip.items(in: category).sorted { !$0.isPacked && $1.isPacked }
-                if !categoryItems.isEmpty {
-                    Section(category.label) {
-                        ForEach(categoryItems) { item in
-                            TripItemRow(item: item)
-                        }
-                    }
-                }
+            ForEach(viewModel.sortedCategories, id: \.self) { category in
+                categorySection(for: category)
             }
             
             // Tombol Batalkan
             Section {
                 Button(role: .destructive) {
-                    showFinishAlert = true
+                    viewModel.showCancelAlert = true
                 } label: {
                     Text("Batalkan Pendakian")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(.red)
                 }
-                .alert("Batalkan Pendakian?", isPresented: $showFinishAlert) {
+                .alert("Batalkan Pendakian?", isPresented: $viewModel.showCancelAlert) {
                     Button("Setuju", role: .destructive) {
                         
-                        NotificationsManager.shared.cancelNotifications(for: trip)
+                        //                        NotificationsManager.shared.cancelNotifications(for: trip)
                         
-                        context.delete(trip)
+                        //                        context.delete(trip)
                         
-                        dismiss()
+                        do {
+                            let deletedTrip = viewModel.trip
+                            try viewModel.deleteTrip()
+                            onDelete(deletedTrip)
+                            dismiss()
+                        } catch {
+                            
+                        }
                     }
                     Button("Batal", role: .cancel) {}
                 } message: {
@@ -156,20 +130,23 @@ struct CarrierChecklistView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    showAddItem = true
+                    viewModel.showFinishAlert = true
                 } label: {
                     Text("Selesaikan Pendakian")
                 }
-                .disabled(!isEnableComplete)
-                .tint(isEnableComplete ? .green : .gray)
-                .alert("Selesaikan Pendakian?", isPresented: $showFinishAlert) {
+                .disabled(!viewModel.isEnableComplete)
+                .tint(viewModel.isEnableComplete ? .green : .gray)
+                .alert("Selesaikan Pendakian?", isPresented: $viewModel.showFinishAlert) {
                     Button("Setuju", role: .destructive) {
-                        
-                        NotificationsManager.shared.cancelNotifications(for: trip)
-                        
-                        context.delete(trip)
-                        
-                        dismiss()
+                        do {
+                            let finishedTrip = viewModel.trip
+                            NotificationsManager.shared.cancelNotifications(for: finishedTrip)
+                            try viewModel.deleteTrip()
+                            onDelete(finishedTrip)
+                            dismiss()
+                        } catch {
+                            
+                        }
                     }
                     Button("Batal", role: .cancel) {}
                 } message: {
@@ -181,7 +158,7 @@ struct CarrierChecklistView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    showAddItem = true
+                    viewModel.showAddItem = true
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -190,12 +167,50 @@ struct CarrierChecklistView: View {
             }
             
         }
-        .sheet(isPresented: $showAddItem) {
-            AddTripItemView(trip: trip)
+        .sheet(isPresented: $viewModel.showAddItem) {
+            AddTripItemView(
+                viewModel: dependencies.makeAddTripItemViewModel(trip: viewModel.trip),
+                dependencies: dependencies,
+                onSaved: { newItem in
+                    viewModel.applyAddedItem(newItem)
+                }
+            )
         }
+    }
+    
+    @ViewBuilder
+    private func categorySection(
+        for category: ItemCategories
+    ) -> some View {
+        Section(category.label) {
+            ForEach(viewModel.items(for: category)) { item in
+                itemRow(for: item)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func itemRow(for item: TripItem) -> some View {
+        TripItemRow(
+            item: item,
+            trip: viewModel.trip,
+            onToggle: {
+                viewModel.togglePacked(item)
+            },
+            onDelete: {
+                viewModel.deleteItem(item)
+            },
+            isDeleteable: { _ in
+                viewModel.isDeleteable(item)
+            },
+            onItemUpdated: { _ in
+                viewModel.applyUpdatedItem(item)
+            },
+            dependencies: dependencies
+        )
     }
 }
 
-#Preview {
-    CarrierChecklistView(trip: Trip(startDate: Date.now, endDate: Date.distantFuture, numberofHikers: 2, isPast: false, mountain: Mountain(name: "Gunung Test", grade: .gradeI, location: "Jawa Tengah", height: 1234, minimumHikeDuration: 2, imageName: "gunung_ijen")))
-}
+//#Preview {
+//    CarrierChecklistView(trip: Trip(startDate: Date.now, endDate: Date.distantFuture, numberofHikers: 2, isPast: false, mountain: Mountain(name: "Gunung Test", grade: .gradeI, location: "Jawa Tengah", height: 1234, minimumHikeDuration: 2, imageName: "gunung_ijen")))
+//}

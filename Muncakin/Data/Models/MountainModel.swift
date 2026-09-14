@@ -19,7 +19,16 @@ final class MountainModel {
     var imageName: String
     var specificItems: [PackItemModel] = []
     
-    init(id: UUID = UUID(), name: String, grade: MountainGrades, location: String, height: Int, minimumHikeDuration: Int, imageName: String) {
+    init(
+        id: UUID = UUID(),
+        name: String,
+        grade: MountainGrades,
+        location: String,
+        height: Int,
+        minimumHikeDuration: Int,
+        imageName: String,
+        specificItems: [PackItemModel] = []
+    ) {
         self.id = id
         self.name = name
         self.grade = grade
@@ -27,5 +36,6 @@ final class MountainModel {
         self.height = height
         self.minimumHikeDuration = minimumHikeDuration
         self.imageName = imageName
+        self.specificItems = specificItems
     }
 }

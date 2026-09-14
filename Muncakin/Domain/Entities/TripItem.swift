@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct TripItem{
+struct TripItem: Identifiable {
     let id: UUID
-    let name: String
-    let quantity: Int
-    let units: ItemUnits
-    let isPacked: Bool
+    var name: String
+    var quantity: Int
+    var units: ItemUnits
+    var isPacked: Bool
     let layer: ItemLayers
-    let category: ItemCategories
-    let ownership: ItemOwnerships
-    let notes: String?
-    let trip: Trip?
-    let sourcePackItem: PackItem
+    var category: ItemCategories
+    var ownership: ItemOwnerships
+    var notes: String?
+    let sourcePackItem: PackItem?
 }

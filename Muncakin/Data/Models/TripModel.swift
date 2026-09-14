@@ -13,10 +13,8 @@ final class TripModel {
     @Attribute(.unique) var id: UUID
     var startDate: Date
     var endDate: Date
-    var numberOfHikers: Int
     var isPast: Bool
-    
-    var mountain: MountainModel?
+    var mountain: MountainModel
     
     @Relationship(deleteRule: .cascade, inverse: \TripItemModel.trip)
     var items: [TripItemModel] = []
@@ -25,14 +23,12 @@ final class TripModel {
         id: UUID = UUID(),
         startDate: Date,
         endDate: Date,
-        numberofHikers: Int,
         isPast: Bool,
-        mountain: MountainModel? = nil
+        mountain: MountainModel
     ){
         self.id = id
         self.startDate = startDate
         self.endDate = endDate
-        self.numberOfHikers = numberofHikers
         self.isPast = isPast
         self.mountain = mountain
     }
